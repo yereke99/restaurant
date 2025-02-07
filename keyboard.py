@@ -31,6 +31,55 @@ class Button:
         
         return keyboard
     
+    def meal_menu(self):
+        keyboard = types.InlineKeyboardMarkup(row_width=1)
+        keyboard.add(
+            types.InlineKeyboardButton("🍽 10 000 теңге", callback_data="10000"),
+            types.InlineKeyboardButton("🍽 25 000 теңге", callback_data="25000"),
+            types.InlineKeyboardButton("🍽 35 000 теңге", callback_data="35000"),
+            types.InlineKeyboardButton("🍽 45 000 теңге", callback_data="45000"),
+        )
+        return keyboard
+    
+    def event_menu(self):
+        keyboard = types.InlineKeyboardMarkup(row_width=1)
+        keyboard.add(
+            types.InlineKeyboardButton("🕺 Асаба (100 000 тг)", callback_data="event_asaba"),
+            types.InlineKeyboardButton("👯‍♀️ Биші (100 000 тг)", callback_data="event_bishi"),
+            types.InlineKeyboardButton("🎤 Әнші (100 000 тг)", callback_data="event_anshi"),
+            types.InlineKeyboardButton("✅ Дайын", callback_data="event_done")  # Кнопка завершения
+        )
+        return keyboard
+    
+    def cities(self):
+        keyboard = types.InlineKeyboardMarkup(row_width=1)
+        keyboard.add(
+            types.InlineKeyboardButton("Алматы", callback_data="almaty"),
+        )
+        return keyboard
+    
+    def typeOfCelebrate(self):
+        return self._create_keyboard([
+            "👤 Ас беру",
+            "🎊 Той жасау"
+        ])
+    
+    def countPeople(self):
+        return self._create_keyboard([
+            "70",
+            "200",
+        ])
+    
+    def restaurant(self):
+
+        keyboard = types.InlineKeyboardMarkup(row_width=1)
+        keyboard.add(
+            types.InlineKeyboardButton("🏢 Достар мейрамханысы", callback_data="dostar"),
+        )
+        return keyboard
+    
+    
+    
     def buy_cinema(self):
 
         keyboard = types.InlineKeyboardMarkup()

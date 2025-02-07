@@ -45,6 +45,8 @@ class Forma(StatesGroup):
     s5 = State()  # Адресс
 
 
+
+
 @dp.message_handler(state='*', commands='🔕 Бас тарту')
 @dp.message_handler(Text(equals='🔕 Бас тарту', ignore_case=True), state='*')
 async def cancell_handler(message: types.Message, state: FSMContext):

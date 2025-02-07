@@ -16,6 +16,8 @@ import time
 from FormaAdmin import*
 import os
 from tests import*
+from Formas import*
+
 
 generator = Generator()
 btn = Button()
@@ -210,25 +212,25 @@ async def start_handler(message: types.Message):
     if args == "TikTok":
         # Логика для TikTok
         db.tiktok_counter()
-        await Forma.s1.set()
+        await Formas.s1.set()
         await bot.send_message(
-            message.from_user.id,
-            text="*Құрметті тойшыл қазағым! Жай ғана той жасап астыңызға темір 🚘 тұлпар мінгіңіз келсе біздің мейрамханымызда 🥳 той жай мерей той жасаңыз*",
-            parse_mode="Markdown",
-            reply_markup=btn.address()
-        ) 
+                message.from_user.id,
+                text="*Құрметті тойшыл қазағым! Жай ғана той жасап астыңызға темір 🚘 тұлпар мінгіңіз келсе біздің мейрамханымызда 🥳 мерей той жасаңыз\nҚандай той жасағыңыз келеді?*",
+                parse_mode="Markdown",
+                reply_markup=btn.typeOfCelebrate()
+        )  
         return
     
     elif args == "Instagram":
         # Логика для Instagram
         db.instagram_counter()
-        await Forma.s1.set()
+        await Formas.s1.set()
         await bot.send_message(
-            message.from_user.id,
-            text="*Құрметті тойшыл қазағым! Жай ғана той жасап астыңызға темір 🚘 тұлпар мінгіңіз келсе біздің мейрамханымызда 🥳 той жай мерей той жасаңыз*",
-            parse_mode="Markdown",
-            reply_markup=btn.address()
-        )
+                message.from_user.id,
+                text="*Құрметті тойшыл қазағым! Жай ғана той жасап астыңызға темір 🚘 тұлпар мінгіңіз келсе біздің мейрамханымызда 🥳 мерей той жасаңыз\nҚандай той жасағыңыз келеді?*",
+                parse_mode="Markdown",
+                reply_markup=btn.typeOfCelebrate()
+        ) 
         return 
 
     print(message.from_user.id)
@@ -244,36 +246,34 @@ async def start_handler(message: types.Message):
     db.JustInsert(user_id, user_name, time_now)  
     
     if db.CheckUserPaid(message.from_user.id) == True:
-        await bot.send_photo(
-            message.from_user.id,
-            fileId,
-            caption="""*Құрметті тойшыл қазағым! Жай ғана той жасап астыңызға темір 🚘 тұлпар мінгіңіз келсе біздің мейрамханымызда 🥳 той жай мерей той жасаңыз*""",
-            parse_mode="Markdown",
-            protect_content=True,
-            reply_markup=btn.address(),
-        )
+        await Formas.s1.set()
+        await bot.send_message(
+                message.from_user.id,
+                text="*Құрметті тойшыл қазағым! Жай ғана той жасап астыңызға темір 🚘 тұлпар мінгіңіз келсе біздің мейрамханымызда 🥳 мерей той жасаңыз\nҚандай той жасағыңыз келеді?*",
+                parse_mode="Markdown",
+                reply_markup=btn.typeOfCelebrate()
+        ) 
         return
     
 
-    await bot.send_photo(
+    await Formas.s1.set()
+    await bot.send_message(
             message.from_user.id,
-            fileId,
-            caption="""*Құрметті тойшыл қазағым! Жай ғана той жасап астыңызға темір 🚘 тұлпар мінгіңіз келсе біздің мейрамханымызда 🥳 той жай мерей той жасаңыз*""",
+            text="*Құрметті тойшыл қазағым! Жай ғана той жасап астыңызға темір 🚘 тұлпар мінгіңіз келсе біздің мейрамханымызда 🥳 мерей той жасаңыз\nҚандай той жасағыңыз келеді?*",
             parse_mode="Markdown",
-            protect_content=True,
-            reply_markup=btn.address(),
-        )
+            reply_markup=btn.typeOfCelebrate()
+    ) 
 
 
 @dp.message_handler(Text(equals="🥳 Той жасау"), content_types=['text'])
 async def handler(message: types.Message):
     
-    await Forma.s1.set()
+    await Formas.s1.set()
     await bot.send_message(
             message.from_user.id,
-            text="*Қанша суммаға той жасайсыз? 1 билет құны 500 000 теңге\nТөмендегі түймелерді баса отыра билетті таңдаңыз*",
+            text="*Құрметті тойшыл қазағым! Жай ғана той жасап астыңызға темір 🚘 тұлпар мінгіңіз келсе біздің мейрамханымызда 🥳 мерей той жасаңыз\nҚандай той жасағыңыз келеді?*",
             parse_mode="Markdown",
-            reply_markup=btn.digits_and_cancel()
+            reply_markup=btn.typeOfCelebrate()
     ) 
 
 

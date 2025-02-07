@@ -5,6 +5,15 @@ import random
 MAX_MESSAGE_LENGTH = 4096
 
 
+
+def ConvertMealToMoney(meal: str) -> int:
+    h = {
+        "🍽 10 000 теңге": 10000,
+        "🍽 25 000 теңге": 25000,
+        "🍽 35 000 теңге": 35000,
+        "🍽 45 000 теңге": 45000,
+    }
+
 class Generator:
     @staticmethod
     def generate_random_int(length=8):
