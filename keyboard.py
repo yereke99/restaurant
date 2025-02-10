@@ -5,6 +5,8 @@ import datetime
 from load import bot
 from database import Database
 
+START_OFFSET = 0
+
 class Button:
     def __init__(self) -> None:
         pass
@@ -259,3 +261,53 @@ class Button:
         keyboard.add(types.KeyboardButton("📱 Контактімен бөлісу", request_contact=True))
 
         return keyboard
+    
+
+    
+
+    def generate_calendar(self, offset: int):
+        """Генерирует inline-календарь с датами от завтра на 3 месяца вперед"""
+        today = datetime.date.today()
+        first_day = today.replace(day=1) + datetime.timedelta(days=30 * offset)
+        first_day = first_day.replace(day=1)  # Получаем 1-е число месяца
+        next_month = first_day + datetime.timedelta(days=32)
+        next_month = next_month.replace(day=1)
+
+        keyboard = InlineKeyboardMarkup(row_width=7)
+
+        # Заголовок с названием месяца
+        keyboard.add(InlineKeyboardButton(f"📅 {first_day.strftime('%B %Y')}", callback_data="none"))
+
+        # Заголовки дней недели
+        days_row = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
+        keyboard.add(*[InlineKeyboardButton(day, callback_data="none") for day in days_row])
+
+        # Даты в календаре
+        first_weekday = first_day.weekday()  # 0 - Пн, 6 - Вс
+        days_in_month = (next_month - datetime.timedelta(days=1)).day
+
+        # Заполняем пустыми ячейками до первого дня месяца
+        buttons = [InlineKeyboardButton(" ", callback_data="none")] * first_weekday
+
+        # Добавляем кнопки дат
+        for day in range(1, days_in_month + 1):
+            date = first_day.replace(day=day)
+            if date >= today + datetime.timedelta(days=1):  # Отображаем даты только от завтра
+                buttons.append(InlineKeyboardButton(str(day), callback_data=f"date_{date}"))
+
+        # Разбиваем кнопки по неделям (7 дней в строке)
+        for i in range(0, len(buttons), 7):
+            keyboard.add(*buttons[i:i + 7])
+
+        # Кнопки управления месяцами
+        navigation_buttons = []
+        if offset > 0:
+            navigation_buttons.append(InlineKeyboardButton("⏪ Назад", callback_data=f"prev_{offset}"))
+        if offset < 2:
+            navigation_buttons.append(InlineKeyboardButton("Вперед ⏩", callback_data=f"next_{offset}"))
+
+        if navigation_buttons:
+            keyboard.add(*navigation_buttons)
+
+        return keyboard
+
