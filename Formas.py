@@ -164,11 +164,11 @@ def add_months(sourcedate: date, months: int) -> date:
 def generate_calendar(offset: int = 0) -> InlineKeyboardMarkup:
     """
     Генерирует inline-календарь для месяца с указанным offset.
-    Отображаются даты от завтрашнего дня до трёх месяцев вперёд.
+    Отображаются даты от завтрашнего дня до одного года вперёд.
     """
     today = date.today()
     allowed_start = today + timedelta(days=1)
-    allowed_end = add_months(today, 3)  # Ограничение – три месяца вперед (первое число месяца)
+    allowed_end = add_months(today, 12)  # Ограничение – один год вперед (первое число месяца)
     
     # Определяем целевой месяц (offset=0 – текущий месяц, offset=1 – следующий и т.д.)
     target_date = add_months(today, offset)
@@ -206,7 +206,7 @@ def generate_calendar(offset: int = 0) -> InlineKeyboardMarkup:
     nav_buttons = []
     if offset > 0:
         nav_buttons.append(InlineKeyboardButton("⏪ Назад", callback_data=f"cal_prev_{offset-1}"))
-    if offset < 3:  # Ограничим навигацию тремя месяцами
+    if offset < 12:  # Ограничим навигацию одним годом (12 месяцев)
         nav_buttons.append(InlineKeyboardButton("Вперёд ⏩", callback_data=f"cal_next_{offset+1}"))
     if nav_buttons:
         keyboard.add(*nav_buttons)
